@@ -6,7 +6,7 @@ int isp(char ch)					//栈内符号优先级
 	switch(ch)
 	{
 		case '#':
-			temp=0;
+			temp=-1;
 			break;
 		case '(':
 			temp=1;
@@ -33,7 +33,7 @@ int icp(char ch)				//栈外符号优先级
 	switch(ch)
 	{
 		case '#':
-			temp=0;
+			temp=-1;
 			break;
 		case '(':
 			temp=6;
@@ -48,7 +48,7 @@ int icp(char ch)				//栈外符号优先级
 			temp=2;
 			break;
 		case ')':
-			temp=1;
+			temp=0;
 			break;
 	}
 	return temp;
@@ -76,7 +76,7 @@ void Calculator::Run()				//计算器运行函数
 				op.Push(ch);
 			else if(isp(op.GetTop())>icp(ch))		//如果栈顶元素优先级大于读入字符优先级
 			{
-				while(op.GetTop()!='#')				//当读到（时 。。。。。。
+				while (isp(op.GetTop())>icp(ch))	//只要栈外的运算符优先级高于栈内优先级即进行运算
 				{                                   //实在懒得解释
 					if(op.GetTop()=='(')
 					{
